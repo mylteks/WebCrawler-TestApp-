@@ -28,16 +28,9 @@ namespace Test_app
 
         async public Task<List<string>> GetUrlsAsync(string currentUrl)
         {
-            //bool comparer = true;
-            //while (comparer)
-            //{
-            //    using var context = BrowsingContext.New(config);
-            //    using var doc = await context.OpenAsync(currentUrl);
-            //    comparer = doc == null ? true : false;
-            //}
+           
             using var context = BrowsingContext.New(config);
             using var doc = await context.OpenAsync(currentUrl);
-            //foundedUrls = new List<st
             foundedUrls=doc.QuerySelectorAll<IHtmlAnchorElement>("a")
             .Select(a =>
             {
