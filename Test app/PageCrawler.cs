@@ -6,91 +6,90 @@ namespace Test_app
 {
     public class PageCrawler
     {
-        IConfiguration config;
-        public List<string> urls { get; set; }
-        public List<string> foundedUrls;
-        string rootUrl;
+        private readonly IConfiguration _config;
+        private string? _rootUrl;
 
         public PageCrawler()
         {
-            config = Configuration.Default.WithDefaultLoader();
+            _config = Configuration.Default.WithDefaultLoader();
         }
 
-        public PageCrawler(string mainUrl)
+        public async Task<List<string>> CrawlAsync(string url)
         {
-            config = Configuration.Default.WithDefaultLoader();
-            foundedUrls = new List<string>();
-            urls = new List<string>();
-            rootUrl = mainUrl;
+            var crawledUrls = new List<string>();
+            var pagesList = await GetUrlsAsync(url);
+
+            foreach (var page in pagesList)
+            {
+                if (!crawledUrls.Contains(page))
+                {
+                    crawledUrls.Add(page);
+                    await CrawlAsync(page);
+                }
+            }
+
+            return crawledUrls;
         }
 
+        // TO DO:
+        // Create "Printer" class
 
+        //public void Print(List<string> sitemapUrls)
+        //{
+        //    Console.WriteLine("\nFounded by crawling\n");
 
-        async public Task<List<string>> GetUrlsAsync(string currentUrl)
+        //    var ListsDistinct = Urls.Except(sitemapUrls).ToList();
+
+        //    if(ListsDistinct.Count == 0)
+        //    {
+        //        Console.WriteLine("No links founded");
+        //        return;
+        //    }
+
+        //    for (int i = 0; i < ListsDistinct.Count; i++)
+        //    {
+        //        Console.WriteLine($"[{i + 1}] {ListsDistinct[i]}");
+        //    }
+
+        //}
+
+        private async Task<List<string>> GetUrlsAsync(string currentUrl)
         {
-           
-            using var context = BrowsingContext.New(config);
+            using var context = BrowsingContext.New(_config);
             using var doc = await context.OpenAsync(currentUrl);
-            foundedUrls=doc.QuerySelectorAll<IHtmlAnchorElement>("a")
+
+            var foundedUrls = doc.QuerySelectorAll<IHtmlAnchorElement>("a")
             .Select(a =>
             {
                 var currentLink = a.Attributes["href"]?.Value;
-                if (currentLink == null) return "";
+
+                if (currentLink == null) return String.Empty;
+
                 if (IsLinkValid(currentLink))
                 {
-                    return "";
+                    return String.Empty;
                 }
+
                 if (!currentLink.EndsWith("/"))
                 {
                     currentLink += "/";
                 }
+
                 if (!currentLink.StartsWith("http"))
                 {
                     currentLink = currentLink.StartsWith("/") ?
-                    rootUrl + currentLink.Substring(1, currentLink.Length - 1) :
-                    rootUrl + currentLink;
+                    _rootUrl + currentLink.Substring(1, currentLink.Length - 1) :
+                    _rootUrl + currentLink;
                 }
-                
+
                 return currentLink;
-            }).Where(a => (a.Contains(rootUrl) && (!string.IsNullOrWhiteSpace(a))))
+            }).Where(a => (a.Contains(_rootUrl) && (!string.IsNullOrWhiteSpace(a))))
             .Distinct().ToList();
+
             return foundedUrls;
         }
-        async public Task CrawlAsync(string url)
-        {
-            var pagesList = await GetUrlsAsync(url);
-            foreach (var page in pagesList)
-            {
-                if (!urls.Contains(page))
-                {
-                    urls.Add(page);
-                    await CrawlAsync(page);
-                }
-            }
-        }
 
-        public void Print(List<string> sitemapUrls)
-        {
-            Console.WriteLine("\nFounded by crawling\n");
-
-            var ListsDistinct = urls.Except(sitemapUrls).ToList();
-
-            Console.WriteLine(urls.Count);
-            if(ListsDistinct.Count == 0)
-            {
-                Console.WriteLine("No links founded");
-            }
-            else
-            {
-                for (int i = 0; i < ListsDistinct.Count; i++)
-                {
-                    Console.WriteLine($"[{i + 1}] {ListsDistinct[i]}");
-                }
-            }
-            
-        }
-
-        public bool IsLinkValid(string link)
+        private bool IsLinkValid(string link)
         {
             var Extensions = new List<string>
             {
@@ -101,10 +100,12 @@ namespace Test_app
                 ".ogg",".wav","pkg",".rar",
                 ".zip",".ico","#","?",":"
             };
-            if(Extensions.FirstOrDefault(x=>link.Contains(x))!=null)
+
+            if (Extensions.FirstOrDefault(x => link.Contains(x)) != null)
             {
                 return true;
             }
+
             return false;
         }
     }
