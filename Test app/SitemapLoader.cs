@@ -31,20 +31,5 @@ namespace Test_app
 
             return urls;
         }
-
-        // TO DO:
-        // Create "Printer" class
-
-        //public void Print(List<string> crawlUrls)
-        //{
-        //    var SitemapExcept = SitemapUrls.Except(crawlUrls).ToList();
-
-        //    Console.WriteLine("\nUrls FOUNDED IN SITEMAP.XML but not founded after crawling : \n");
-
-        //    for (int i = 0; i < SitemapExcept.Count; i++)
-        //    {
-        //        Console.WriteLine($"[{i + 1}] {SitemapExcept[i]}");
-        //    }
-        //}
     }
 }

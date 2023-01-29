@@ -31,28 +31,6 @@ namespace Test_app
             return crawledUrls;
         }
 
-        // TO DO:
-        // Create "Printer" class
-
-        //public void Print(List<string> sitemapUrls)
-        //{
-        //    Console.WriteLine("\nFounded by crawling\n");
-
-        //    var ListsDistinct = Urls.Except(sitemapUrls).ToList();
-
-        //    if(ListsDistinct.Count == 0)
-        //    {
-        //        Console.WriteLine("No links founded");
-        //        return;
-        //    }
-
-        //    for (int i = 0; i < ListsDistinct.Count; i++)
-        //    {
-        //        Console.WriteLine($"[{i + 1}] {ListsDistinct[i]}");
-        //    }
-
-        //}
-
         private async Task<List<string>> GetUrlsAsync(string currentUrl)
         {
             using var context = BrowsingContext.New(_config);
