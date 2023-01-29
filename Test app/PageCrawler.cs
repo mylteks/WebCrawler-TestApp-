@@ -8,50 +8,36 @@ namespace Test_app
     {
         private readonly IConfiguration _config;
         private string? _rootUrl;
+        private List<string>? _visitedPages;
 
         public PageCrawler()
         {
             _config = Configuration.Default.WithDefaultLoader();
         }
 
+        public async Task<List<string>> GetCrawlLinks(string url)
+        {
+            _visitedPages = new List<string>();
+            _rootUrl = url;
+            return await CrawlAsync(url);
+        }
+
         public async Task<List<string>> CrawlAsync(string url)
         {
-            var crawledUrls = new List<string>();
+            //var crawledUrls = new List<string>();
             var pagesList = await GetUrlsAsync(url);
 
             foreach (var page in pagesList)
             {
-                if (!crawledUrls.Contains(page))
+                if (!_visitedPages.Contains(page))
                 {
-                    crawledUrls.Add(page);
+                    _visitedPages.Add(page);
                     await CrawlAsync(page);
                 }
             }
 
-            return crawledUrls;
+            return _visitedPages;
         }
-
-        // TO DO:
-        // Create "Printer" class
-
-        //public void Print(List<string> sitemapUrls)
-        //{
-        //    Console.WriteLine("\nFounded by crawling\n");
-
-        //    var ListsDistinct = Urls.Except(sitemapUrls).ToList();
-
-        //    if(ListsDistinct.Count == 0)
-        //    {
-        //        Console.WriteLine("No links founded");
-        //        return;
-        //    }
-
-        //    for (int i = 0; i < ListsDistinct.Count; i++)
-        //    {
-        //        Console.WriteLine($"[{i + 1}] {ListsDistinct[i]}");
-        //    }
-
-        //}
 
         private async Task<List<string>> GetUrlsAsync(string currentUrl)
         {
@@ -98,7 +84,7 @@ namespace Test_app
                 ".xlsx",".txt",".webp",".gif",
                 ".mp4",".xml",".aif",".mp3",
                 ".ogg",".wav","pkg",".rar",
-                ".zip",".ico","#","?",":"
+                ".zip",".ico","#","?",":"," "
             };
 
             if (Extensions.FirstOrDefault(x => link.Contains(x)) != null)

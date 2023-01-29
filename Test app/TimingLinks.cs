@@ -29,20 +29,5 @@ namespace Test_app
 
             return linksTiming;
         }
-
-        // TO DO:
-        // Create "Printer" class
-
-        //public void PrintTiming(int crawlCount, int sitemapCount)
-        // {
-        //     var sortedLinks = linksTiming.OrderBy(x => x.Value);
-        //     Console.WriteLine("\nTiming report :");
-        //     for (int i = 0; i < sortedLinks.Count(); i++)
-        //     {
-        //         Console.WriteLine($"[{i}]" + sortedLinks.ElementAt(i).Key + "  " + sortedLinks.ElementAt(i).Value + "ms.");
-        //     }
-        //     Console.WriteLine($"\nLinks founded in sitemap.xml : {sitemapCount}");
-        //     Console.WriteLine($"Links founded by crawling : {crawlCount}");
-        // }
     }
 }

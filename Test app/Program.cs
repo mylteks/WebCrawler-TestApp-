@@ -10,18 +10,15 @@ while (Console.ReadKey().Key != ConsoleKey.Escape)
     var pageCrawler = new PageCrawler();
     var sitemapLoader = new SitemapLoader();
     var timingLinks = new TimingLinks();
+    var print = new Printer();
 
-    var crawledLinks = await pageCrawler.CrawlAsync(url);
+    var crawledLinks = await pageCrawler.GetCrawlLinks(url);
     var sitemapLinks = sitemapLoader.LoadXmlUrls(url);
-
-    // TO DO:
-    // Create "Printer" class
-
-    //pageCrawler.Print(sitemapLoader.SitemapUrls);
-    //sitemapLoader.Print(pageCrawler.Urls);
-
-    await timingLinks.LinksTiming(crawledLinks, sitemapLinks);
-    //timingLinks.PrintTiming(crawledLinks.Count, sitemapLinks.Count);
+    var timingResult = await timingLinks.LinksTiming(crawledLinks, sitemapLinks);
+    
+    print.PrintFoundedLinks(crawledLinks, sitemapLinks);
+    print.PrintTimingResult(timingResult);
+    print.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
 
     Console.WriteLine("Press Esc to exit, enter new url to continue");
 }
