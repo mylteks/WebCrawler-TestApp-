@@ -17,14 +17,15 @@ namespace Test_app
             if (sitemapExcept.Count == 0)
             {
                 Console.WriteLine("No links founded");
-                return;
             }
-
-            for (int i = 0; i < sitemapExcept.Count; i++)
+            else
             {
-                Console.WriteLine($"[{i + 1}] {sitemapExcept[i]}");
+                for (int i = 0; i < sitemapExcept.Count; i++)
+                {
+                    Console.WriteLine($"[{i + 1}] {sitemapExcept[i]}");
+                }
             }
-
+            
             Console.WriteLine("\nFounded by crawling\n");
 
             var crawlExcept = crawlUrls.Except(sitemapUrls).ToList();

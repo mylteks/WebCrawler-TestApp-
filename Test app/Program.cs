@@ -12,7 +12,7 @@ while (Console.ReadKey().Key != ConsoleKey.Escape)
     var timingLinks = new TimingLinks();
     var print = new Printer();
 
-    var crawledLinks = await pageCrawler.CrawlAsync(url);
+    var crawledLinks = await pageCrawler.GetCrawlLinks(url);
     var sitemapLinks = sitemapLoader.LoadXmlUrls(url);
     var timingResult = await timingLinks.LinksTiming(crawledLinks, sitemapLinks);
     
