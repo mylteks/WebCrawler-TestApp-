@@ -17,7 +17,8 @@ while (Console.ReadKey().Key != ConsoleKey.Escape)
     var timingResult = await timingLinks.LinksTiming(crawledLinks, sitemapLinks);
     
     print.PrintFoundedLinks(crawledLinks, sitemapLinks);
-    print.PrintTimingRes(crawledLinks.Count,sitemapLinks.Count,timingResult);
+    print.PrintTimingResult(timingResult);
+    print.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
 
     Console.WriteLine("Press Esc to exit, enter new url to continue");
 }

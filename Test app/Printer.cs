@@ -18,13 +18,10 @@ namespace Test_app
             {
                 Console.WriteLine("No links founded");
             }
-            else
-            {
                 for (int i = 0; i < sitemapExcept.Count; i++)
                 {
                     Console.WriteLine($"[{i + 1}] {sitemapExcept[i]}");
                 }
-            }
             
             Console.WriteLine("\nFounded by crawling\n");
 
@@ -42,7 +39,7 @@ namespace Test_app
             }
         }
 
-        public void PrintTimingRes(int crawlCount,int sitemapCount,Dictionary<string,double> linksTiming)
+        public void PrintTimingResult(Dictionary<string,double> linksTiming)
         {
             var sortedLinks = linksTiming.OrderBy(x => x.Value);
 
@@ -52,7 +49,10 @@ namespace Test_app
             {
                 Console.WriteLine($"[{i}]" + sortedLinks.ElementAt(i).Key + "  " + sortedLinks.ElementAt(i).Value + "ms.");
             }
+        } 
 
+        public void PrintFoundedCount(int crawlCount, int sitemapCount)
+        {
             Console.WriteLine($"\nLinks founded in sitemap.xml : {sitemapCount}");
             Console.WriteLine($"Links founded by crawling : {crawlCount}");
         }
