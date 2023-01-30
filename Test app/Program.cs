@@ -20,5 +20,6 @@ while (Console.ReadKey().Key != ConsoleKey.Escape)
     print.PrintTimingResult(timingResult);
     print.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
 
+
     Console.WriteLine("Press Esc to exit, enter new url to continue");
 }

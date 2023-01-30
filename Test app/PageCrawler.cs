@@ -6,14 +6,8 @@ namespace Test_app
 {
     public class PageCrawler
     {
-        private readonly IConfiguration _config;
         private string? _rootUrl;
         private List<string>? _visitedPages;
-
-        public PageCrawler()
-        {
-            _config = Configuration.Default.WithDefaultLoader();
-        }
 
         public async Task<List<string>> GetCrawlLinks(string url)
         {
@@ -41,8 +35,8 @@ namespace Test_app
 
         private async Task<List<string>> GetUrlsAsync(string currentUrl)
         {
-            using var context = BrowsingContext.New(_config);
-            using var doc = await context.OpenAsync(currentUrl);
+            var loader = new PageLoader();
+            var doc = await loader.LoadPage(currentUrl);
 
             var foundedUrls = doc.QuerySelectorAll<IHtmlAnchorElement>("a")
             .Select(a =>

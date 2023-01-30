@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Net;
 
 namespace Test_app
 {
@@ -9,22 +8,15 @@ namespace Test_app
         {
             var linksTiming = new Dictionary<string, double>();
             var linksUnion = crawlLinks.Union(sitemap).ToList();
+            var loader = new PageLoader();
 
             foreach (string link in linksUnion)
             {
-                var request = WebRequest.Create(link);
                 var sw = Stopwatch.StartNew();
+                await loader.LoadPage(link);
+                sw.Stop();
 
-                try
-                {
-                    WebResponse response = await request.GetResponseAsync();
-                    sw.Stop();
-                }
-                catch (Exception ex) { }
-                finally
-                {
-                    linksTiming.Add(link, sw.ElapsedMilliseconds);
-                }
+                linksTiming.Add(link, sw.ElapsedMilliseconds);
             }
 
             return linksTiming;
