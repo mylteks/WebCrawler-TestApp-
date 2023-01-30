@@ -18,7 +18,6 @@ namespace Test_app
 
         public async Task<List<string>> CrawlAsync(string url)
         {
-            //var crawledUrls = new List<string>();
             var pagesList = await GetUrlsAsync(url);
 
             foreach (var page in pagesList)

@@ -41,7 +41,7 @@
 
             for (int i = 0; i < sortedLinks.Count(); i++)
             {
-                Console.WriteLine($"[{i}]" + sortedLinks.ElementAt(i).Key + "  " + sortedLinks.ElementAt(i).Value + "ms.");
+                Console.WriteLine($"[{i+1}]" + sortedLinks.ElementAt(i).Key + "  " + sortedLinks.ElementAt(i).Value + "ms.");
             }
         }
 
