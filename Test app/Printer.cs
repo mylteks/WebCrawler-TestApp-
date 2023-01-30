@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Test_app
+﻿namespace Test_app
 {
     internal class Printer
     {
@@ -18,11 +12,11 @@ namespace Test_app
             {
                 Console.WriteLine("No links founded");
             }
-                for (int i = 0; i < sitemapExcept.Count; i++)
-                {
-                    Console.WriteLine($"[{i + 1}] {sitemapExcept[i]}");
-                }
-            
+            for (int i = 0; i < sitemapExcept.Count; i++)
+            {
+                Console.WriteLine($"[{i + 1}] {sitemapExcept[i]}");
+            }
+
             Console.WriteLine("\nFounded by crawling\n");
 
             var crawlExcept = crawlUrls.Except(sitemapUrls).ToList();
@@ -39,7 +33,7 @@ namespace Test_app
             }
         }
 
-        public void PrintTimingResult(Dictionary<string,double> linksTiming)
+        public void PrintTimingResult(Dictionary<string, double> linksTiming)
         {
             var sortedLinks = linksTiming.OrderBy(x => x.Value);
 
@@ -49,7 +43,7 @@ namespace Test_app
             {
                 Console.WriteLine($"[{i}]" + sortedLinks.ElementAt(i).Key + "  " + sortedLinks.ElementAt(i).Value + "ms.");
             }
-        } 
+        }
 
         public void PrintFoundedCount(int crawlCount, int sitemapCount)
         {
