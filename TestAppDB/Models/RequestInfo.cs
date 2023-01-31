@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Test_app_DB.Models
+namespace TestAppDB.Models
 {
     public class RequestInfo
     {

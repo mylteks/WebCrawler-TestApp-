@@ -1,29 +1,36 @@
-﻿using Test_app;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Test_app;
 using TestAppDB;
 
-Console.WriteLine("Press any key to start, press Esc to exit");
-while (Console.ReadKey().Key != ConsoleKey.Escape)
-{
-    Console.WriteLine("Enter website url :");
-    var url = Console.ReadLine();
-    Console.WriteLine($"Entered urls is : {url}");
+using IHost host = CreateHostBuilder().Build();
 
-    var pageCrawler = new PageCrawler();
-    var sitemapLoader = new SitemapLoader();
-    var timingLinks = new TimingLinks();
-    var print = new Printer();
-    var dbContext = new CrawlerDB();
-    var creator = new ModelCreator();
+var app = host.Services.GetService<App>();
 
-    var crawledLinks = await pageCrawler.GetCrawlLinks(url);
-    var sitemapLinks = sitemapLoader.LoadXmlUrls(url);
-    var timingResult = await timingLinks.LinksTiming(crawledLinks, sitemapLinks);
-    
-    print.PrintFoundedLinks(crawledLinks, sitemapLinks);
-    print.PrintTimingResult(timingResult);
-    print.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
+await app.RunAsync();
 
-    dbContext.AddCrawlingResult(creator.GenerateRequestInfo(url, crawledLinks, sitemapLinks, timingResult));
 
-    Console.WriteLine("Press Esc to exit, enter new url to continue");
-}
+static IHostBuilder CreateHostBuilder() =>
+    Host.CreateDefaultBuilder().
+    ConfigureServices((hostContext, services) =>
+    {
+
+        IConfiguration configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+        var conString = configuration.GetConnectionString("CrawlerDb");
+
+        services.AddDbContext<CrawlerContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("CrawlerDb"))
+        );
+
+        services.AddScoped();
+
+    }).ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Error));
+
+
+
