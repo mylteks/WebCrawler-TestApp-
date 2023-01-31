@@ -1,9 +1,10 @@
-﻿using TestAppDB;
+﻿using WebCrawlerDataBase;
+using WebCrawlerLogic;
 
-namespace Test_app
+namespace WebCrawlerConsole
 {
 
-    internal class App
+    public class App
     {
         private readonly PageCrawler _pageCrawler;
         private readonly SitemapLoader _sitemapLoader;

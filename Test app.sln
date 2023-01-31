@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test app", "Test app\Test app.csproj", "{A7EE33E4-12B8-4FB3-B550-1DF95727ECFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler.Console", "Test app\WebCrawler.Console.csproj", "{A7EE33E4-12B8-4FB3-B550-1DF95727ECFE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8854BC78-C04E-4841-8D17-9687EF52E0D3} = {8854BC78-C04E-4841-8D17-9687EF52E0D3}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAppDB", "TestAppDB\TestAppDB.csproj", "{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler.DataBase", "TestAppDB\WebCrawler.DataBase.csproj", "{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCrawler.Logic", "WebCrawler.Logic\WebCrawler.Logic.csproj", "{8854BC78-C04E-4841-8D17-9687EF52E0D3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD} = {F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,10 @@ Global
 		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

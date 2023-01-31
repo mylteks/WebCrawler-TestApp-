@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TestAppDB;
+using WebCrawlerDataBase;
 
 #nullable disable
 
-namespace TestAppDB.Migrations
+namespace WebCrawlerDataBase.Migrations
 {
     [DbContext(typeof(CrawlerContext))]
     [Migration("20230130125128_Initial")]

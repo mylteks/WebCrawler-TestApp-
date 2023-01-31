@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TestAppDB.Models;
+using WebCrawlerDataBase.Models;
 
-namespace TestAppDB
+namespace WebCrawlerDataBase
 {
     public class CrawlerContext : DbContext
     {

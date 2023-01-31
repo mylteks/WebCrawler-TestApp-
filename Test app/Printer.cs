@@ -1,6 +1,6 @@
-﻿namespace Test_app
+﻿namespace WebCrawlerConsole
 {
-    internal class Printer
+    public class Printer
     {
         public void PrintFoundedLinks(List<string> crawlUrls, List<string> sitemapUrls)
         {

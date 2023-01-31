@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TestAppDB;
+using WebCrawlerDataBase;
 
-namespace Test_app
+namespace WebCrawlerLogic
 {
     public static class ServiceConfiguration
     {
@@ -10,9 +10,7 @@ namespace Test_app
             collection.AddScoped<PageCrawler>()
                       .AddScoped<SitemapLoader>()
                       .AddScoped<TimingLinks>()
-                      .AddScoped<Printer>()
                       .AddScoped<ModelCreator>()
-                      .AddScoped<App>()
                       .AddScoped<CrawlerDB>();
 
             return collection;
