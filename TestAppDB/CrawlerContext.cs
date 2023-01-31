@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Test_app_DB.Models;
+using TestAppDB.Models;
 
-namespace Test_app_DB
+namespace TestAppDB
 {
     public class CrawlerContext : DbContext
     {
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public CrawlerContext(DbContextOptions<CrawlerContext> options)
+             : base(options)
         {
-            optionsBuilder.UseSqlServer
-                ("Data Source=.\\SQLEXPRESS;Initial Catalog=CrawlerDb;Trusted_Connection=True;Encrypt=False");
+            Database.Migrate();
         }
 
         public virtual DbSet<RequestInfo> RequestInfo { get; set; }

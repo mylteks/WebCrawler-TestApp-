@@ -1,4 +1,4 @@
-﻿using Test_app_DB.Models;
+﻿using TestAppDB.Models;
 
 namespace TestAppDB
 {
@@ -16,7 +16,7 @@ namespace TestAppDB
             };
         }
 
-        public List<RequestResult> GenerateRequestResult(List<string> crawledUrls, List<string> sitemapUrls, Dictionary<string,double> timingResult)
+        public List<RequestResult> GenerateRequestResult(List<string> crawledUrls, List<string> sitemapUrls, Dictionary<string, double> timingResult)
         {
             var result = new List<RequestResult>();
 

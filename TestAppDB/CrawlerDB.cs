@@ -1,5 +1,4 @@
-﻿using Test_app_DB;
-using Test_app_DB.Models;
+﻿using TestAppDB.Models;
 
 namespace TestAppDB
 {
@@ -7,9 +6,9 @@ namespace TestAppDB
     {
         CrawlerContext _context;
 
-        public CrawlerDB()
+        public CrawlerDB(CrawlerContext context)
         {
-            _context = new CrawlerContext();
+            _context = context;
         }
 
         public async void AddCrawlingResult(RequestInfo model)
