@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestAppDB\WebCrawler.DataBase.csproj" />
+    <ProjectReference Include="..\WebCrawler.DataBase\WebCrawler.DataBase.csproj" />
   </ItemGroup>
 
 </Project>

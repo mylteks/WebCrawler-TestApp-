@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler.Console", "Test app\WebCrawler.Console.csproj", "{A7EE33E4-12B8-4FB3-B550-1DF95727ECFE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8854BC78-C04E-4841-8D17-9687EF52E0D3} = {8854BC78-C04E-4841-8D17-9687EF52E0D3}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler.Logic", "WebCrawler.Logic\WebCrawler.Logic.csproj", "{8854BC78-C04E-4841-8D17-9687EF52E0D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler.DataBase", "TestAppDB\WebCrawler.DataBase.csproj", "{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler.Console", "WebCrawler.Console\WebCrawler.Console.csproj", "{AEC1EBFF-7EC7-4B01-B343-78192BD798E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCrawler.Logic", "WebCrawler.Logic\WebCrawler.Logic.csproj", "{8854BC78-C04E-4841-8D17-9687EF52E0D3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD} = {F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCrawler.DataBase", "WebCrawler.DataBase\WebCrawler.DataBase.csproj", "{215B27D0-6723-406A-B9A5-75BE923CAC48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A7EE33E4-12B8-4FB3-B550-1DF95727ECFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7EE33E4-12B8-4FB3-B550-1DF95727ECFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7EE33E4-12B8-4FB3-B550-1DF95727ECFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7EE33E4-12B8-4FB3-B550-1DF95727ECFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8D516B5-A5E6-4C11-9BB4-AA797C9047AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8854BC78-C04E-4841-8D17-9687EF52E0D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEC1EBFF-7EC7-4B01-B343-78192BD798E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEC1EBFF-7EC7-4B01-B343-78192BD798E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEC1EBFF-7EC7-4B01-B343-78192BD798E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEC1EBFF-7EC7-4B01-B343-78192BD798E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{215B27D0-6723-406A-B9A5-75BE923CAC48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{215B27D0-6723-406A-B9A5-75BE923CAC48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{215B27D0-6723-406A-B9A5-75BE923CAC48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{215B27D0-6723-406A-B9A5-75BE923CAC48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
