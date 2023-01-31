@@ -1,4 +1,5 @@
 ﻿using Test_app;
+using TestAppDB;
 
 Console.WriteLine("Press any key to start, press Esc to exit");
 while (Console.ReadKey().Key != ConsoleKey.Escape)
@@ -11,6 +12,8 @@ while (Console.ReadKey().Key != ConsoleKey.Escape)
     var sitemapLoader = new SitemapLoader();
     var timingLinks = new TimingLinks();
     var print = new Printer();
+    var dbContext = new CrawlerDB();
+    var creator = new ModelCreator();
 
     var crawledLinks = await pageCrawler.GetCrawlLinks(url);
     var sitemapLinks = sitemapLoader.LoadXmlUrls(url);
@@ -20,6 +23,7 @@ while (Console.ReadKey().Key != ConsoleKey.Escape)
     print.PrintTimingResult(timingResult);
     print.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
 
+    dbContext.AddCrawlingResult(creator.GenerateRequestInfo(url, crawledLinks, sitemapLinks, timingResult));
 
     Console.WriteLine("Press Esc to exit, enter new url to continue");
 }
