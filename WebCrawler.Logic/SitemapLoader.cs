@@ -1,8 +1,8 @@
 ﻿using System.Xml;
 
-namespace Test_app
+namespace WebCrawlerLogic
 {
-    internal class SitemapLoader
+    public class SitemapLoader
     {
         public List<string> LoadXmlUrls(string url)
         {

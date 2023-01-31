@@ -3,8 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Test_app;
-using TestAppDB;
+using WebCrawlerConsole;
+using WebCrawlerDataBase;
+using WebCrawlerLogic;
 
 using IHost host = CreateHostBuilder().Build();
 
@@ -29,6 +30,8 @@ static IHostBuilder CreateHostBuilder() =>
         );
 
         services.AddScoped();
+        services.AddScoped<App>();
+        services.AddScoped<Printer>();
 
     }).ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Error));
 

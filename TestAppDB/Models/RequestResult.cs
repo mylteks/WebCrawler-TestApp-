@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TestAppDB.Models
+namespace WebCrawlerDataBase.Models
 {
     public class RequestResult
     {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace TestAppDB.Migrations
+namespace WebCrawlerDataBase.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

@@ -1,9 +1,9 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
 
-namespace Test_app
+namespace WebCrawlerLogic
 {
-    internal class PageLoader
+    public class PageLoader
     {
         public async Task<IDocument> LoadPage(string url)
         {

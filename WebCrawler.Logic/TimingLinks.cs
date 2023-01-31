@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace Test_app
+namespace WebCrawlerLogic
 {
-    internal class TimingLinks
+    public class TimingLinks
     {
         public async Task<Dictionary<string, double>> LinksTiming(List<string> crawlLinks, List<string> sitemap)
         {

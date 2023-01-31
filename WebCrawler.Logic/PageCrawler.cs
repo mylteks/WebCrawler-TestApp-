@@ -1,8 +1,7 @@
-﻿using AngleSharp;
-using AngleSharp.Dom;
+﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 
-namespace Test_app
+namespace WebCrawlerLogic
 {
     public class PageCrawler
     {
