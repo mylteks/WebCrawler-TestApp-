@@ -1,5 +1,4 @@
-﻿using WebCrawlerDataBase;
-using WebCrawlerLogic;
+﻿using WebCrawlerLogic;
 
 namespace WebCrawlerConsole
 {
@@ -10,18 +9,16 @@ namespace WebCrawlerConsole
         private readonly SitemapLoader _sitemapLoader;
         private readonly TimingLinks _timingLinks;
         private readonly Printer _printer;
-        private readonly ModelCreator _modelCreator;
-        private readonly CrawlerDB _dbContext;
+        private readonly CrawlerService _crawlerService;
 
         public App(PageCrawler pageCrawler, SitemapLoader sitemapLoader, TimingLinks timingLinks,
-                   Printer printer, ModelCreator creator, CrawlerDB dbContex)
+                   Printer printer, CrawlerService crawlerService)
         {
             _pageCrawler = pageCrawler;
             _sitemapLoader = sitemapLoader;
             _timingLinks = timingLinks;
             _printer = printer;
-            _modelCreator = creator;
-            _dbContext = dbContex;
+            _crawlerService = crawlerService;
         }
 
         public async Task RunAsync()
@@ -34,15 +31,11 @@ namespace WebCrawlerConsole
                 var url = Console.ReadLine();
                 Console.WriteLine($"Entered urls is : {url}");
 
-                var crawledLinks = await _pageCrawler.GetCrawlLinks(url);
-                var sitemapLinks = _sitemapLoader.LoadXmlUrls(url);
-                var timingResult = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks);
+                var performanceResult = await _crawlerService.GetPerformanceAsync(url);
 
-                _printer.PrintFoundedLinks(crawledLinks, sitemapLinks);
-                _printer.PrintTimingResult(timingResult);
-                _printer.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
+                _printer.PrintPerformanceResult(performanceResult);
 
-                _dbContext.AddCrawlingResult(_modelCreator.GenerateRequestInfo(url, crawledLinks, sitemapLinks, timingResult));
+                await _crawlerService.SaveRequestInfo(url, performanceResult.CrawledUrls, performanceResult.SitemapUrls, performanceResult.TimingResult);
 
                 Console.WriteLine("Press Esc to exit, enter new url to continue");
             }

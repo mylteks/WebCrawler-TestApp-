@@ -3,15 +3,16 @@ using WebCrawlerDataBase;
 
 namespace WebCrawlerLogic
 {
-    public static class ServiceConfiguration
+    public static class CrawlerServiceConfiguration
     {
         public static IServiceCollection AddScoped(this IServiceCollection collection)
         {
-            collection.AddScoped<PageCrawler>()
+            collection.AddScoped<CrawlerDB>()
+                      .AddScoped<PageCrawler>()
                       .AddScoped<SitemapLoader>()
                       .AddScoped<TimingLinks>()
-                      .AddScoped<ModelCreator>()
-                      .AddScoped<CrawlerDB>();
+                      .AddScoped<CrawlerService>()
+                      .AddScoped<RequestMapper>();
 
             return collection;
         }

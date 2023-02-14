@@ -1,0 +1,100 @@
+﻿@using WebCrawler.WebApp.Models
+
+@model WebCrawler.Logic.Models.PerformanceModel
+
+<span>Founded by crawling :</span>
+
+@{
+    var crawledExcept = Model.CrawledUrls.Except(Model.SitemapUrls);
+}
+
+@if (crawledExcept.Count() == 0)
+{
+    <span>No links founded</span>
+}
+else
+{
+    <table class="table table-dark table-striped">
+	<thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">URL</th>
+          <th scope="col">Timing</th>
+          <th scope="col">Founded</th>
+        </tr>
+    </thead>
+    <tbody>
+            @for (int i=0; i<crawledExcept.Count(); i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>@crawledExcept.ElementAt(i)</td>
+                    <td></td>
+                    <td>Crawled</td>
+                </tr>
+            }
+        </tbody>
+</table>
+}
+
+@{
+    var sitemapExcept = Model.SitemapUrls.Except(Model.CrawledUrls);
+}
+
+<span>Founded in sitemap :</span>
+
+@if (sitemapExcept.Count() == 0)
+{
+    <span>No links founded</span>
+}
+else
+{
+    <table class="table table-dark table-striped">
+	<thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">URL</th>
+          <th scope="col">Timing</th>
+          <th scope="col">Founded</th>
+        </tr>
+    </thead>
+    <tbody>
+            @for (int i=0; i<sitemapExcept.Count(); i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>@sitemapExcept.ElementAt(i)</td>
+                    <td></td>
+                    <td>Sitemap</td>
+                </tr>
+            }
+    </tbody>
+</table>
+}
+
+<span>Timing repot :</span>
+
+<table class="table table-dark table-striped">
+	<thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">URL</th>
+          <th scope="col">Timing</th>
+          <th scope="col">Founded</th>
+        </tr>
+    </thead>
+    <tbody>
+            @for (int i=0; i<Model.TimingResult.Count; i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>@Model.TimingResult.ElementAt(i).Key</td>
+                    <td>@Model.TimingResult.ElementAt(i).Value</td>
+                    <td></td>
+                </tr>
+            }
+    </tbody>
+</table>
+
+<span>Links founded in sitemap.xml - @Model.SitemapUrls.Count()</span>
+<span>Links founded by crawling - @Model.CrawledUrls.Count()</span>

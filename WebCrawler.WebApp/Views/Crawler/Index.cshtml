@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using(Html.BeginForm("ShowPerformace","Crawler",FormMethod.Post))
+{
+<div class="align-content-center">
+    <div style="display:flex; flex-direction:row;">
+         <input type="text" name="url" id="URL" class="form-control h-10 w-25" placeholder="Enter URL"/>
+         <button type="submit" class="btn-primary h-10 w-10 ms-2" asp-for> Test performance</button>
+    </div>
+</div>
+}
+
