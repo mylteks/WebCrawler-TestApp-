@@ -1,0 +1,93 @@
+﻿@using WebCrawler.Logic.Models
+
+@model IEnumerable<RequestResultModel>
+
+<h3>Founded by crawling :</h3>
+@{
+    var crawlDistinct = Model.Where(x => ((x.IsCrawl == true)&&(x.IsSitemap == false)));
+}
+@if (crawlDistinct.Count()==0)
+{
+    <span>No links founded</span>
+}
+else
+{
+    <table class="table table-dark table-striped">
+	<thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">URL</th>
+      <th scope="col">Founded</th>
+    </tr>
+    </thead>
+    <tbody>
+            @for (int i=0; i < crawlDistinct.Count(); i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>@crawlDistinct.ElementAt(i).Url</td>
+                    <td>Crawled</td>
+                </tr>
+            }
+        </tbody>
+  
+</table>
+}
+
+<h3>Founded in sitemap :</h3>
+
+@{var sitemapDistinct = Model.Where(x => ((x.IsCrawl == false)&&(x.IsSitemap == true)));}
+
+@if (sitemapDistinct.Count() == 0)
+{
+    <span>No links founded</span>
+}
+else
+{
+    <table class="table table-dark table-striped">
+	<thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">URL</th>
+      <th scope="col">Founded</th>
+    </tr>
+    </thead>
+    <tbody>
+            @for (int i=0; i<sitemapDistinct.Count(); i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>@sitemapDistinct.ElementAt(i).Url</td>
+                    <td>Sitemap</td>
+                </tr>
+            }
+        </tbody>
+</table>
+}
+
+<h3>Timing report :</h3>
+@{
+    var reportOdrerByTiming = Model.OrderBy(x => x.Timing).ToList();
+}
+<table class="table table-dark table-striped">
+	<thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">URL</th>
+          <th scope="col">Timing</th>
+        </tr>
+    </thead>
+    <tbody>
+            @for (int i=0; i < reportOdrerByTiming.Count(); i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>@reportOdrerByTiming.ElementAt(i).Url</td>
+                    <td>@reportOdrerByTiming.ElementAt(i).Timing</td>
+                </tr>
+            }
+    </tbody>
+</table>
+
+<h5>Links founded in sitemap.xml - @sitemapDistinct.Count()</h5>
+<h5>Links founded by crawling - @crawlDistinct.Count()</h5>

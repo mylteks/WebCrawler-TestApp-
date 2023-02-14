@@ -1,0 +1,25 @@
+﻿@using WebCrawler.Logic.Models
+
+@model IEnumerable<RequestInfoModel>
+
+<table class="table table-dark table-striped">
+	<thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">URL</th>
+      <th scope="col">Searched</th>
+    </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count() ; i++)
+        {
+            <tr>
+                    <td>@(i+1)</td>
+                    <td>@Html.ActionLink(@Model.ElementAt(i).WebsiteName,"ShowUrlReport","Crawler",new {id = @Model.ElementAt(i).Id})</td>
+                    <td>@Model.ElementAt(i).RequestTime</td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+

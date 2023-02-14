@@ -1,5 +1,4 @@
-﻿using WebCrawlerDataBase;
-using WebCrawlerLogic;
+﻿using WebCrawlerLogic;
 
 namespace WebCrawlerConsole
 {
@@ -10,18 +9,16 @@ namespace WebCrawlerConsole
         private readonly SitemapLoader _sitemapLoader;
         private readonly TimingLinks _timingLinks;
         private readonly Printer _printer;
-        private readonly ModelCreator _modelCreator;
-        private readonly CrawlerDB _dbContext;
+        private readonly CrawlerService _crawlerService;
 
         public App(PageCrawler pageCrawler, SitemapLoader sitemapLoader, TimingLinks timingLinks,
-                   Printer printer, ModelCreator creator, CrawlerDB dbContex)
+                   Printer printer, CrawlerService crawlerService)
         {
             _pageCrawler = pageCrawler;
             _sitemapLoader = sitemapLoader;
             _timingLinks = timingLinks;
             _printer = printer;
-            _modelCreator = creator;
-            _dbContext = dbContex;
+            _crawlerService = crawlerService;
         }
 
         public async Task RunAsync()
@@ -42,7 +39,7 @@ namespace WebCrawlerConsole
                 _printer.PrintTimingResult(timingResult);
                 _printer.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
 
-                _dbContext.AddCrawlingResult(_modelCreator.GenerateRequestInfo(url, crawledLinks, sitemapLinks, timingResult));
+                _crawlerService.SaveRequestInfo(url, crawledLinks, sitemapLinks, timingResult);
 
                 Console.WriteLine("Press Esc to exit, enter new url to continue");
             }
