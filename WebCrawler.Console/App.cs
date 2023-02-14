@@ -31,15 +31,11 @@ namespace WebCrawlerConsole
                 var url = Console.ReadLine();
                 Console.WriteLine($"Entered urls is : {url}");
 
-                var crawledLinks = await _pageCrawler.GetCrawlLinks(url);
-                var sitemapLinks = _sitemapLoader.LoadXmlUrls(url);
-                var timingResult = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks);
+                var performanceResult = await _crawlerService.GetPerformanceAsync(url);
 
-                _printer.PrintFoundedLinks(crawledLinks, sitemapLinks);
-                _printer.PrintTimingResult(timingResult);
-                _printer.PrintFoundedCount(crawledLinks.Count, sitemapLinks.Count);
+                _printer.PrintPerformanceResult(performanceResult);
 
-                _crawlerService.SaveRequestInfo(url, crawledLinks, sitemapLinks, timingResult);
+                await _crawlerService.SaveRequestInfo(url, performanceResult.CrawledUrls, performanceResult.SitemapUrls, performanceResult.TimingResult);
 
                 Console.WriteLine("Press Esc to exit, enter new url to continue");
             }

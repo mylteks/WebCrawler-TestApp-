@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebCrawler.Logic;
+using WebCrawler.Logic.Models;
 using WebCrawler.WebApp.Models;
 using WebCrawlerLogic;
 
@@ -28,30 +29,32 @@ namespace WebCrawler.WebApp.Controllers
 
         public  async Task<IActionResult> ShowPerformace(string url)
         {
-            var sitemapLinks = _sitemap.LoadXmlUrls(url);
-            var crawledLinks = await _crawler.GetCrawlLinks(url);
-            var timingReport = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks);
+            var performanceResult = await _crawlerService.GetPerformanceAsync(url);
 
-            _crawlerService.SaveRequestInfo(url, crawledLinks, sitemapLinks, timingReport);
+            await _crawlerService.SaveRequestInfo(url, performanceResult.CrawledUrls, performanceResult.SitemapUrls, performanceResult.TimingResult);
 
             PerformanceModel model = new PerformanceModel
             {
-                PerformanceResult = timingReport,
-                CrawledUrls = crawledLinks,
-                SitemapUrls = sitemapLinks
+                TimingResult = performanceResult.TimingResult,
+                CrawledUrls = performanceResult.CrawledUrls,
+                SitemapUrls = performanceResult.SitemapUrls
             };
 
             return  View(model);
         }
 
-        public async Task<IActionResult> PrintDatabase()
+        public async Task<IActionResult> ShowResults()
         {
-            return View("ShowSavedData",_crawlerService.GetSavedWebsites());
+            var savedWebsites = _crawlerService.GetSavedWebsitesAsync();
+
+            return View("ShowSavedData", savedWebsites);
         }
 
         public async Task<IActionResult> ShowUrlReport(int id)
         {
-            return View("ShowUrlReport",await _crawlerService.GetRequestResultById(id));
+            var requestResult = await _crawlerService.GetRequestResultByIdAsync(id);
+
+            return View("ShowUrlReport", requestResult);
         }
     }
 }

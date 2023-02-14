@@ -1,8 +1,10 @@
-﻿namespace WebCrawlerConsole
+﻿using WebCrawler.Logic.Models;
+
+namespace WebCrawlerConsole
 {
     public class Printer
     {
-        public void PrintFoundedLinks(List<string> crawlUrls, List<string> sitemapUrls)
+        public void PrintFoundedLinks(IEnumerable<string> crawlUrls, IEnumerable<string> sitemapUrls)
         {
             var sitemapExcept = sitemapUrls.Except(crawlUrls).ToList();
 
@@ -49,6 +51,13 @@
         {
             Console.WriteLine($"\nLinks founded in sitemap.xml : {sitemapCount}");
             Console.WriteLine($"Links founded by crawling : {crawlCount}");
+        }
+
+        public void PrintPerformanceResult(PerformanceModel performanceResult)
+        {
+            PrintFoundedLinks(performanceResult.CrawledUrls, performanceResult.SitemapUrls);
+            PrintTimingResult(performanceResult.TimingResult);
+            PrintFoundedCount(performanceResult.CrawledUrls.Count(), performanceResult.SitemapUrls.Count());
         }
     }
 }

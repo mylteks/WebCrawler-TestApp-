@@ -11,7 +11,6 @@ namespace WebCrawlerLogic
                       .AddScoped<PageCrawler>()
                       .AddScoped<SitemapLoader>()
                       .AddScoped<TimingLinks>()
-                      .AddScoped<ModelCreator>()
                       .AddScoped<CrawlerService>()
                       .AddScoped<RequestMapper>();
 

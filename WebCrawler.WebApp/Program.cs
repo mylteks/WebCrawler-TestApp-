@@ -7,15 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-IConfiguration configuration = new ConfigurationBuilder()
-       .AddJsonFile("appsettings.json")
-       .Build();
-
-var conString = configuration.GetConnectionString("CrawlerDb");
-
 builder.Services.AddDbContext<CrawlerContext>(options =>
-        options.UseSqlServer(configuration.GetConnectionString("CrawlerDb"))
-        ); ;
+        options.UseSqlServer(builder.Configuration.GetConnectionString("CrawlerDB"))
+        );
+
 builder.Services.AddScoped();
 
 var app = builder.Build();

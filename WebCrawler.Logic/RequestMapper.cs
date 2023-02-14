@@ -5,32 +5,6 @@ namespace WebCrawlerLogic
 {
     public class RequestMapper
     {
-        public RequestInfo GenerateRequestInfo(string url, IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls, Dictionary<string, double> timingResult)
-        {
-            return new RequestInfo
-            {
-                RequestTime = DateTime.Now,
-                WebsiteName = url,
-                Results = GenerateRequestResult(crawledUrls, sitemapUrls, timingResult).ToList()
-            };
-        }
-
-        public IEnumerable<RequestResult> GenerateRequestResult(IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls, Dictionary<string, double> timingResult)
-        {
-            var result = new List<RequestResult>();
-
-            foreach (var pair in timingResult)
-            {
-                result.Add(new RequestResult
-                {
-                    Timing = pair.Value,
-                    Url = pair.Key,
-                    IsCrawl = crawledUrls.Contains(pair.Key),
-                    IsSitemap = sitemapUrls.Contains(pair.Key)
-                });
-            }
-            return result;
-        }
 
         public IEnumerable<RequestInfoModel> MapRequestInfo(IEnumerable<RequestInfo> requestInfos)
         {

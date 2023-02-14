@@ -12,9 +12,9 @@ namespace WebCrawlerDataBase
             _context = context;
         }
 
-        public async void AddCrawlingResultAsync(RequestInfo model)
+        public async Task AddCrawlingResultAsync(RequestInfo model)
         {
-            _context.RequestInfo.Add(model);
+            await _context.RequestInfo.AddAsync(model);
 
             await _context.SaveChangesAsync();
         }
@@ -24,9 +24,9 @@ namespace WebCrawlerDataBase
             return await _context.RequestInfo.Include(x => x.Results).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public IEnumerable<RequestInfo> GetWebsitesList()
+        public async Task<IReadOnlyCollection<RequestInfo>> GetWebsitesListAsync()
         {
-            return _context.RequestInfo;
+            return await _context.RequestInfo.ToListAsync();
         }
     }
 }

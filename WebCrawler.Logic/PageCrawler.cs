@@ -8,7 +8,7 @@ namespace WebCrawlerLogic
         private string? _rootUrl;
         private List<string>? _visitedPages;
 
-        public async Task<List<string>> GetCrawlLinks(string url)
+        public async Task<List<string>> GetCrawlLinksAsync(string url)
         {
             _visitedPages = new List<string>();
             _rootUrl = url;
