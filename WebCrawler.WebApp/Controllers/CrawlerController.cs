@@ -27,7 +27,7 @@ namespace WebCrawler.WebApp.Controllers
             return View("Index");
         }
 
-        public  async Task<IActionResult> ShowPerformace(string url)
+        public  async Task<IActionResult> TestPerformace(string url)
         {
             var performanceResult = await _crawlerService.GetPerformanceAsync(url);
 

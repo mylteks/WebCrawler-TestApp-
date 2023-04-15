@@ -29,52 +29,31 @@ namespace WebCrawlerLogic
 
         public async Task<IEnumerable<RequestResultModel>> GetRequestResultByIdAsync(int id)
         {
-            return _requestMapper.MapRequestResultById(await _dbContext.GetRequestInfoByIdAsync(id));
+            return _requestMapper.MapRequestResultList(await _dbContext.GetRequestInfoByIdAsync(id));
         }
 
-        public async Task SaveRequestInfo(string url, IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls,
-            Dictionary<string, double> timingResult)
+        public async Task SaveRequestInfo(RequestInfoModel requestInfo)
         {
-           await _dbContext.AddCrawlingResultAsync(GenerateRequestInfo(url, crawledUrls, sitemapUrls, timingResult));
+           await _dbContext.AddCrawlingResultAsync(_requestMapper.MapRequestInfo(requestInfo));
         }
 
-        public RequestInfo GenerateRequestInfo(string url, IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls, Dictionary<string, double> timingResult)
-        {
-            return new RequestInfo
-            {
-                RequestTime = DateTime.Now,
-                WebsiteName = url,
-                Results = GenerateRequestResult(crawledUrls, sitemapUrls, timingResult).ToList()
-            };
-        }
-
-        public IEnumerable<RequestResult> GenerateRequestResult(IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls, Dictionary<string, double> timingResult)
-        {
-            var result = new List<RequestResult>();
-
-            foreach (var pair in timingResult)
-            {
-                result.Add(new RequestResult
-                {
-                    Timing = pair.Value,
-                    Url = pair.Key,
-                    IsCrawl = crawledUrls.Contains(pair.Key),
-                    IsSitemap = sitemapUrls.Contains(pair.Key)
-                });
-            }
-            return result;
-        }
-
-        public async Task<PerformanceModel> GetPerformanceAsync(string url)
+        public async Task<RequestInfoModel> GetPerformanceAsync(string url)
         {
             var crawledLinks = await _pageCrawler.GetCrawlLinksAsync(url);
             var sitemapLinks = _sitemapLoader.LoadXmlUrls(url);
+            var timings = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks);
 
-            return new PerformanceModel
+            return new RequestInfoModel
             {
-                CrawledUrls = crawledLinks,
-                SitemapUrls = sitemapLinks,
-                TimingResult = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks)
+                WebsiteName = url,
+                RequestTime = DateTime.UtcNow,
+                Results = timings.Select(timingsPair => new RequestResultModel
+                {
+                    Timing = timingsPair.Value,
+                    Url = timingsPair.Key,
+                    IsCrawl = crawledLinks.Contains(timingsPair.Key),
+                    IsSitemap = sitemapLinks.Contains(timingsPair.Key)
+                })
             };
         }
     }
