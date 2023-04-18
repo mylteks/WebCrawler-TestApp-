@@ -24,18 +24,18 @@ namespace WebCrawlerLogic
 
         public async Task<IEnumerable<RequestInfoModel>> GetSavedWebsitesAsync()
         {
-            return _requestMapper.MapRequestInfo(await _dbContext.GetWebsitesListAsync());
+            return _requestMapper.MapRequestInfoList(await _dbContext.GetWebsitesListAsync());
         }
 
         public async Task<IEnumerable<RequestResultModel>> GetRequestResultByIdAsync(int id)
         {
-            return _requestMapper.MapRequestResultById(await _dbContext.GetRequestInfoByIdAsync(id));
+            var requestResults = await _dbContext.GetRequestInfoByIdAsync(id);
+            return _requestMapper.MapRequestResultList(requestResults.Results);
         }
 
-        public async Task SaveRequestInfo(string url, IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls,
-            Dictionary<string, double> timingResult)
+        public async Task SaveRequestInfo(RequestInfoModel requestInfo)
         {
-           await _dbContext.AddCrawlingResultAsync(GenerateRequestInfo(url, crawledUrls, sitemapUrls, timingResult));
+           await _dbContext.AddCrawlingResultAsync(_requestMapper.MapRequestInfoModel(requestInfo));
         }
 
         public RequestInfo GenerateRequestInfo(string url, IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls, Dictionary<string, double> timingResult)
@@ -65,17 +65,14 @@ namespace WebCrawlerLogic
             return result;
         }
 
-        public async Task<PerformanceModel> GetPerformanceAsync(string url)
+        public async Task<RequestInfoModel> TestPerformanceAsync(string url)
         {
             var crawledLinks = await _pageCrawler.GetCrawlLinksAsync(url);
             var sitemapLinks = _sitemapLoader.LoadXmlUrls(url);
+            var timingResult = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks);
+            var mappedResults = GenerateRequestInfo(url,crawledLinks, sitemapLinks, timingResult);
 
-            return new PerformanceModel
-            {
-                CrawledUrls = crawledLinks,
-                SitemapUrls = sitemapLinks,
-                TimingResult = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks)
-            };
+            return _requestMapper.MapRequestInfo(mappedResults);
         }
     }
 }

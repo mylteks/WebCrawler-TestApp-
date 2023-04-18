@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WebCrawler.Logic;
 using WebCrawler.Logic.Models;
-using WebCrawler.WebApp.Models;
 using WebCrawlerLogic;
 
 namespace WebCrawler.WebApp.Controllers
@@ -27,20 +24,18 @@ namespace WebCrawler.WebApp.Controllers
             return View("Index");
         }
 
-        public  async Task<IActionResult> ShowPerformace(string url)
+        public async Task<IActionResult> ShowPerformace(string url)
         {
-            var performanceResult = await _crawlerService.GetPerformanceAsync(url);
+            var performanceResult = await _crawlerService.TestPerformanceAsync(url);
 
-            await _crawlerService.SaveRequestInfo(url, performanceResult.CrawledUrls, performanceResult.SitemapUrls, performanceResult.TimingResult);
-
-            PerformanceModel model = new PerformanceModel
+            await _crawlerService.SaveRequestInfo(new RequestInfoModel
             {
-                TimingResult = performanceResult.TimingResult,
-                CrawledUrls = performanceResult.CrawledUrls,
-                SitemapUrls = performanceResult.SitemapUrls
-            };
+                RequestTime = performanceResult.RequestTime,
+                Results = performanceResult.Results,
+                WebsiteName = url
+            });
 
-            return  View(model);
+            return View(performanceResult);
         }
 
         public async Task<IActionResult> ShowResults()
