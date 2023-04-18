@@ -38,41 +38,33 @@ namespace WebCrawlerLogic
            await _dbContext.AddCrawlingResultAsync(_requestMapper.MapRequestInfoModel(requestInfo));
         }
 
-        public RequestInfo GenerateRequestInfo(string url, IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls, Dictionary<string, double> timingResult)
-        {
-            return new RequestInfo
-            {
-                RequestTime = DateTime.Now,
-                WebsiteName = url,
-                Results = GenerateRequestResult(crawledUrls, sitemapUrls, timingResult).ToList()
-            };
-        }
-
-        public IEnumerable<RequestResult> GenerateRequestResult(IEnumerable<string> crawledUrls, IEnumerable<string> sitemapUrls, Dictionary<string, double> timingResult)
-        {
-            var result = new List<RequestResult>();
-
-            foreach (var pair in timingResult)
-            {
-                result.Add(new RequestResult
-                {
-                    Timing = pair.Value,
-                    Url = pair.Key,
-                    IsCrawl = crawledUrls.Contains(pair.Key),
-                    IsSitemap = sitemapUrls.Contains(pair.Key)
-                });
-            }
-            return result;
-        }
-
         public async Task<RequestInfoModel> TestPerformanceAsync(string url)
         {
             var crawledLinks = await _pageCrawler.GetCrawlLinksAsync(url);
             var sitemapLinks = _sitemapLoader.LoadXmlUrls(url);
             var timingResult = await _timingLinks.LinksTiming(crawledLinks, sitemapLinks);
-            var mappedResults = GenerateRequestInfo(url,crawledLinks, sitemapLinks, timingResult);
 
-            return _requestMapper.MapRequestInfo(mappedResults);
+            var requestResult = new List<RequestResultModel>();
+
+            foreach (var pair in timingResult)
+            {
+                requestResult.Add(new RequestResultModel
+                {
+                    Timing = pair.Value,
+                    Url = pair.Key,
+                    IsCrawl = crawledLinks.Contains(pair.Key),
+                    IsSitemap = sitemapLinks.Contains(pair.Key)
+                });
+            }
+
+            var requestInfoResult = new RequestInfoModel
+            {
+                RequestTime = DateTime.Now,
+                WebsiteName = url,
+                Results = requestResult
+            };
+
+            return requestInfoResult;
         }
     }
 }
