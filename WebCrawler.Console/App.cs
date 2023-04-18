@@ -31,7 +31,7 @@ namespace WebCrawlerConsole
                 var url = Console.ReadLine();
                 Console.WriteLine($"Entered urls is : {url}");
 
-                var performanceResult = await _crawlerService.GetPerformanceAsync(url);
+                var performanceResult = await _crawlerService.TestPerformanceAsync(url);
 
                 _printer.PrintPerformanceResult(performanceResult);
 
